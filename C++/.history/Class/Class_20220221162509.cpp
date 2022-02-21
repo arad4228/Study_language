@@ -69,7 +69,7 @@ int main(void)
     
     cout << "고양이의 정보는 "<< c2.name << " " << c2.family << " " <<c2.age << " ";
     cout.precision(4);
-    cout << fixed <<c2.weight << endl;
+    cout << fixed <<c2->weight << endl;
     c2.Mew();
     c2.Sleep();
     c2.Play();

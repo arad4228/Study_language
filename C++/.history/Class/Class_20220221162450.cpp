@@ -57,7 +57,6 @@ int main(void)
 {
     // new를 통한 생성.
     cat* c1 = new cat("나비", "코리안 숏 헤어", 1, 0.1);
-    // New를 통한 생성X.
     cat c2;
     c2.Set("때껄룩", "코리안 숏 헤어", 2, 0.3);
     cout << "고양이의 정보는 "<< c1->name << " " << c1->family << " " <<c1->age << " ";
@@ -69,7 +68,7 @@ int main(void)
     
     cout << "고양이의 정보는 "<< c2.name << " " << c2.family << " " <<c2.age << " ";
     cout.precision(4);
-    cout << fixed <<c2.weight << endl;
+    cout << fixed <<c2->weight << endl;
     c2.Mew();
     c2.Sleep();
     c2.Play();
