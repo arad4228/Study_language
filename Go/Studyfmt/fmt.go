@@ -1,10 +1,11 @@
 package main
 
 import (
+	"Studyfmt/something"
 	"fmt"
 )
 
 func main() {
-	fmt.Print("Hello world")
-	something.sayBye()
+	fmt.Println("Hello world")
+	something.SayHello()
 }
