@@ -25,16 +25,29 @@ func main() {
 		go sexyCount("kung")
 		time.Sleep(time.Second * 5)
 	*/
-	c := make(chan bool)
-	people := [2]string{"jung", "kyng"}
+	c := make(chan string)
+	people := [5]string{"jung", "kyng", "asdh", "qwqe", "qwrac"}
 	for _, person := range people {
 		go isSexy(person, c)
 	}
-	// result := <- c
-	// fmt.Println(result)
-	// 2개의 Goroutine과 2개의 Channel이 생성됨을 안다.
-	fmt.Println(<-c)
-	fmt.Println(<-c)
+	/*
+		result := <- c
+		fmt.Println(result)
+		2개의 Goroutine과 2개의 Channel이 생성됨을 안다.
+		blocking operation
+		메시지의 응답을 기다린다.
+		Goroutine이 끝나고 Channel에서 메시지를 받아오는 것은
+		이것이 실제로 실행할 시까지 모른다.
+	*/
+	/*
+		이방식은 계속추가해줘야하므로 loop를 통해 해결이 가능하다.
+		fmt.Println("Waiting for Messages")
+		fmt.Println("Received This Message:", <-c)
+		fmt.Println("Received This Message:", <-c)
+	*/
+	for i := 0; i < len(people); i++ {
+		fmt.Println("Received This Message:", <-c)
+	}
 }
 
 // 병렬처리를 위해 생성한 함수
@@ -46,9 +59,9 @@ func sexyCount(person string) {
 }
 
 // Channel을 사용하기 위해 생성한 함수.
-func isSexy(person string, c chan bool) {
-	time.Sleep(time.Second * 5)
-	fmt.Println(person)
+// Channel에 어떠한 인자가 가는지 알려줘야한다.
+func isSexy(person string, c chan string) {
+	time.Sleep(time.Second * 10)
 	// Goroutine을 통해 return을 받는 대신에 channel을 통해 메시지를 보냄
-	c <- true
+	c <- person + " is Sexy"
 }
