@@ -70,10 +70,10 @@ func getPage(page int, url string, mainC chan<- []extractedJob) {
 
 func extracteJob(card *goquery.Selection, c chan<- extractedJob) {
 	id, _ := card.Attr("data-jk")
-	title := cleanString(card.Find(".jobTitle>span").Text())
-	location := cleanString(card.Find(".companyLocation").Text())
-	salary := cleanString(card.Find(".salaryText").Text())
-	summary := cleanString(card.Find(".job-snippet").Text())
+	title := CleanString(card.Find(".jobTitle>span").Text())
+	location := CleanString(card.Find(".companyLocation").Text())
+	salary := CleanString(card.Find(".salaryText").Text())
+	summary := CleanString(card.Find(".job-snippet").Text())
 	c <- extractedJob{
 		id:       id,
 		title:    title,
@@ -83,7 +83,7 @@ func extracteJob(card *goquery.Selection, c chan<- extractedJob) {
 }
 
 // string의 공백 제거를 하고 문자간 공백을 제거하고 돌려주는 함수
-func cleanString(str string) string {
+func CleanString(str string) string {
 	return strings.Join(strings.Fields(strings.TrimSpace(str)), " ")
 }
 
