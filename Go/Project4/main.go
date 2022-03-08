@@ -107,6 +107,7 @@ func getPages() int {
 }
 
 func writeJobs(jobs []extractedJob) {
+	c := make(chan []string)
 	file, err := os.Create("jobs.csv")
 	checkErr(err)
 	utf8bom := []byte{0xEF, 0xBB, 0xBF}
@@ -117,15 +118,24 @@ func writeJobs(jobs []extractedJob) {
 
 	headers := []string{"ID", "Title", "Location", "Salary", "Summery"}
 
-	wErr := w.Write(headers)
-	checkErr(wErr)
+	writeErr := w.Write(headers)
+	checkErr(writeErr)
 
 	for _, job := range jobs {
-		jobSlice := []string{"https://kr.indeed.com/viewjob?jk=" + job.id, job.title, job.location, job.salary, job.summary}
+		go writeJobsDetail(job, c)
+	}
+
+	for i := 0; i < len(jobs); i++ {
+		jobSlice := <-c
 		jwErr := w.Write(jobSlice)
 		checkErr(jwErr)
 	}
 
+}
+
+func writeJobsDetail(job extractedJob, c chan<- []string) {
+	const baseJobURL = "https://kr.indeed.com/viewjob?jk="
+	c <- []string{baseJobURL + job.id, job.title, job.location, job.salary, job.summary}
 }
 
 func checkErr(err error) {
