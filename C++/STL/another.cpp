@@ -30,6 +30,23 @@ int main(void)
     list<int> Rs = {10, 20, 30};
 	copy(Rs.rbegin(), Rs.rend(), ostream_iterator<int>(cout, " "));
     cout << endl;
-    
+
+    // Constant iterator
+    list<int> Cs = {10, 20, 30};
+	list<int>::iterator iter;
+    // 실수 반복자가 가르키는 요소를 상수화 한것이지 반복자 자체를 상수화 X
+	list<int>::const_iterator citer;
+	
+	iter = Cs.begin();
+	*iter = 100;
+	citer = Cs.end();
+	// *citer = 300;	// 상수 반복자이므로 값의 변경은 불가능함. 
+		
+	for(citer = Cs.begin(); citer != Cs.end(); citer++)
+	{
+		cout << *citer << " ";
+	}
+    cout << endl;
+
     return 0;
 }
